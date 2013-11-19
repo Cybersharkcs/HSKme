@@ -8,14 +8,14 @@ package com.hskme.model;
  *
  */
 
-public class Statistique implements Runnable {
+public class Statistique extends Thread {
 	
 	Questionnaire q ;
 	boolean state ;
 	private float nbbonnereponses, percmauvrep, percbonrep, nbmauvreponses, nbtotalquest ;
 	public Statistique(Questionnaire q){
-		this.setNbtotalquest(q.serie.size()) ;
 		this.q = q ;
+                this.setNbtotalquest(q.serie.size()) ;
 		this.state = true ;
 	}
 	
@@ -28,7 +28,7 @@ public class Statistique implements Runnable {
 				this.setPercmauvrep(calculPercentageMauvReponses());
 				this.setPercbonrep(calculPercentageBonReponses());
 				this.nbmauvreponses = calculNbMauvReponses();
-				Thread.sleep(10*1000); //every ten sec stats are updated
+				Thread.sleep(5*100); //every ten sec stats are updated
 			} catch (InterruptedException ex) { }
 		}
 	}

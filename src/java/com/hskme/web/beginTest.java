@@ -6,6 +6,7 @@ package com.hskme.web;
 
 import com.hskme.model.Dictionnaire;
 import com.hskme.model.Questionnaire;
+import com.hskme.model.Statistique;
 import java.io.File;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
@@ -44,15 +45,19 @@ public class beginTest extends HttpServlet {
         int nbquest = Integer.parseInt(nb);
         Dictionnaire dico = new Dictionnaire();
         //raspbpi
-//        if(niveau.equals("2")) dico.loadVocab(new File("/var/lib/tomcat7/webapps/HSKme/WEB-INF/dico/hsk2"));
-//        else if(niveau.equals("3")) dico.loadVocab(new File("/var/lib/tomcat7/webapps/HSKme/WEB-INF/dico/hsk3"));
-        if(niveau.equals("2")) dico.loadVocab(new File("/home/maxime/NetBeansProjects/HSKme/web/WEB-INF/dico/hsk2"));
-        else if(niveau.equals("3")) dico.loadVocab(new File("/home/maxime/NetBeansProjects/HSKme/web/WEB-INF/dico/hsk3"));
+        if(niveau.equals("2")) dico.loadVocab(new File("/var/lib/tomcat7/webapps/HSKme/WEB-INF/dico/hsk2"));
+        else if(niveau.equals("3")) dico.loadVocab(new File("/var/lib/tomcat7/webapps/HSKme/WEB-INF/dico/hsk3"));
+//        if(niveau.equals("2")) dico.loadVocab(new File("/home/maxime/NetBeansProjects/HSKme/web/WEB-INF/dico/hsk2"));
+//        else if(niveau.equals("3")) dico.loadVocab(new File("/home/maxime/NetBeansProjects/HSKme/web/WEB-INF/dico/hsk3"));
         Questionnaire quest = new Questionnaire();
         quest.setQuestion(nbquest, dico, from, to);
+        Statistique stats = new Statistique(quest);
+        stats.start();
 
         //definition des attributs de l'application
         getServletContext().setAttribute("questionnaire", quest.getSerie());
+        getServletContext().setAttribute("dictionnaire", dico);
+        getServletContext().setAttribute("statistique", stats);
         getServletContext().setAttribute("count", 0);
         getServletContext().setAttribute("nb", nbquest);
         getServletContext().setAttribute("from", from);

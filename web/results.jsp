@@ -16,13 +16,16 @@
         <table>
             <tr>
                 <td>
-                    Question :
+                    Question 
                 </td>
                 <td>
-                    Solution :
+                    Solution 
                 </td>
                 <td>
-                    Reponse :
+                    Reponse 
+                </td>
+                <td>
+                    Valide ?
                 </td>
             </tr>
             <c:forEach var="quest" items="${questionnaire}" varStatus="questCount" >
@@ -36,9 +39,16 @@
                 <td>
                     ${quest.reponse}
                 </td>
+                <td>                    
+                    <c:if test="${quest.solution eq quest.reponse}" >
+                        <c:set target="${quest}" property="valid" value="true" />
+                    </c:if>
+                    ${quest.valid}
+                </td>
             </tr>
             </c:forEach>
         </table>
+        Score final : ${stats.nbtotalquest} <br>
         <a href="index.jsp">Nouveau questionnaire</a>
     </body>
 </html>
