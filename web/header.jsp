@@ -6,5 +6,6 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>${param.title}</title>
+    <title>HSKme</title>
+    <script type="text/javascript" src="script.js" ></script>
 </head>

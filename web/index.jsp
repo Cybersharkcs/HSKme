@@ -8,46 +8,52 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <jsp:include page="header.jsp" >
-        <jsp:param name="title" value="HSKme" />
-    </jsp:include>
+        <jsp:include page="header.jsp" />
     <body>
-        <h1>Nouveau questionnaire</h1>
-        <form method="POST" action="beginTest.do">
-            <table>
-                <tr>
-                    <th>
-                        Niveau :
-                        <input type="radio" name="hsk" value="2" />HSK2
-                        <input type="radio" name="hsk" value="3" checked />HSK3
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        Nombre de questions :
-                        <input name="nb" value="10" >
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        Montrez en 
-                        <select name="from" size="1">
-                            <option value="caractere"> chinois simplifié </option>
-                            <option value="francais"> français </option>
-                            <option value="pinyin"> pinyin </option>
-                        </select>
-                        et devinez la réponse correcte en 
-                        <select name="to" size="1">
-                            <option value="pinyin"> pinyin </option>
-                            <option value="francais"> français </option>
-                            <option value="caractere"> chinois simplifié </option>
-                        </select>
-                         <center>
-                             <input type="submit" value="Commencez">
-                        </center>
-                    </th>
-                </tr>
-            </table>
-        </form>
+        <div id="title">
+            <h1>Nouveau questionnaire</h1>
+        </div>
+        <div id="content" >
+            <%-- Not idempotent, GET is default --%>
+            <form method="POST" action="CommenceTest.do">
+                <table>
+                    <tr>
+                        <th>
+                            Niveau :
+                            <input type="radio" name="hsk" value="2" />HSK2
+                            <input type="radio" name="hsk" value="3" checked />HSK3
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Nombre de questions :
+                            <input name="nb" value="10" >
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            Montrez en 
+                            <select name="from" id="from" size="1" onChange="refreshElements(this.options[this.selectedIndex].value);">
+                                <option value="caractere"> chinois simplifié </option>
+                                <option value="francais"> français </option>
+                                <option value="pinyin"> pinyin </option>
+                            </select>
+                            et devinez la réponse correcte en 
+                            <select name="to" id="to" size="1">
+                                <option value="caractere"> chinois simplifié </option>
+                                <option value="francais"> français </option>
+                                <option value="pinyin"> pinyin </option>
+                            </select>
+                             <center>
+                                 <input type="submit" value="Commencez">
+                            </center>
+                        </th>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="footer" >
+            <jsp:include page="footer.jsp" />
+        </div>
     </body>
 </html>
