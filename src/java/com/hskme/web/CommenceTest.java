@@ -14,13 +14,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  *
  * @author root
  */
-public class beginTest extends HttpServlet {
+public class CommenceTest extends HttpServlet {
 
+    private static final Logger LOGGER = Logger.getLogger(CommenceTest.class);
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -40,28 +43,27 @@ public class beginTest extends HttpServlet {
         String nb = request.getParameter("nb");
         String from = request.getParameter("from");
         String to = request.getParameter("to");
+        
+        //à mettre dans un filtre
+        BasicConfigurator.configure();
+    	LOGGER.info("INFO : from " + from + " , to : " + to);
 
-        //creation des objets dictionnaire et questionnaire
+        //creation des objets dictionnaire et questionnaire pour 
         int nbquest = Integer.parseInt(nb);
         Dictionnaire dico = new Dictionnaire();
-        //raspbpi
-        if(niveau.equals("2")) dico.loadVocab(new File("/var/lib/tomcat7/webapps/HSKme/WEB-INF/dico/hsk2"));
-        else if(niveau.equals("3")) dico.loadVocab(new File("/var/lib/tomcat7/webapps/HSKme/WEB-INF/dico/hsk3"));
-//        if(niveau.equals("2")) dico.loadVocab(new File("/home/maxime/NetBeansProjects/HSKme/web/WEB-INF/dico/hsk2"));
-//        else if(niveau.equals("3")) dico.loadVocab(new File("/home/maxime/NetBeansProjects/HSKme/web/WEB-INF/dico/hsk3"));
+        if(niveau.equals("2")) dico.loadVocab(new File(getServletContext().getRealPath("/WEB-INF/dico/hsk2")));
+        else if(niveau.equals("3")) dico.loadVocab(new File(getServletContext().getRealPath("/WEB-INF/dico/hsk3")));
         Questionnaire quest = new Questionnaire();
         quest.setQuestion(nbquest, dico, from, to);
-        Statistique stats = new Statistique(quest);
-        stats.start();
-
-        //definition des attributs de l'application
-        getServletContext().setAttribute("questionnaire", quest.getSerie());
-        getServletContext().setAttribute("dictionnaire", dico);
-        getServletContext().setAttribute("statistique", stats);
-        getServletContext().setAttribute("count", 0);
-        getServletContext().setAttribute("nb", nbquest);
-        getServletContext().setAttribute("from", from);
-        getServletContext().setAttribute("to", to);
+        
+        //definition des attributs de la session d'un utilisateur quelquonque
+        request.getSession().setAttribute("questionList", quest.getSerie());
+        request.getSession().setAttribute("questionnaire", quest);
+        request.getSession().setAttribute("dictionnaire", dico);
+        request.getSession().setAttribute("nb", nbquest);
+        request.getSession().setAttribute("from", from);
+        request.getSession().setAttribute("to", to);
+        request.getSession().setAttribute("numero", Integer.valueOf(0));
 
         //debut du test
         RequestDispatcher view = request.getRequestDispatcher("question.jsp");
