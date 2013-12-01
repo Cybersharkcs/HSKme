@@ -38,7 +38,7 @@ public class Questionnaire implements Runnable{
 		int ancienb = this.nbquest;
 		this.nbquest = nb;
 		this.state = true ;
-                String question="",solution="",reponse="";
+                String question="",solution="";
 		for (int i =0 ; i<nb ; i++){
                         if(from.equals("caractere")) {
                             question=dico.getVocab(i).getCaractere();
@@ -53,7 +53,7 @@ public class Questionnaire implements Runnable{
                             if(to.equals("caractere")) solution=dico.getVocab(i).getCaractere();
                             else if(to.equals("pinyin")) solution=dico.getVocab(i).getPinyin();
                         }
-			this.serie.add(new Question(question,reponse,solution));
+			this.serie.add(new Question(question, solution));
 		}
 		QuestionEvent q = new QuestionEvent(serieold,this.serie);
 		System.out.println("DEBUG : Questionnaire rempli, nombre questions : " + this.serie.size()) ;
@@ -90,7 +90,7 @@ public class Questionnaire implements Runnable{
 		String reponseold = this.serie.get(i).getReponse();
 		//on verifie si la reponse est bonne ou pas
 		serie.get(i).setReponse(reponse) ;
-		if ( serie.get(i).equals(serie.get(i).getSolution()) ){
+		if ( serie.get(i).getReponse().equals(serie.get(i).getSolution()) ){
 			serie.get(i).setValid(true) ;
 		} else serie.get(i).setValid(false);
 		

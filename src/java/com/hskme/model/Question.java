@@ -13,9 +13,8 @@ public class Question {
         private boolean valid ;
 	private boolean answered ;
         
-	public Question(String question, String reponse, String solution){
+	public Question(String question, String solution){
 		this.question = question;
-                this.reponse = reponse;
                 this.solution = solution;
 	}
 

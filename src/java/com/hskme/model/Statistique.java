@@ -26,14 +26,13 @@ public class Statistique extends Thread {
 			try{
 				this.nbbonnereponses = calculNbBonneReponses() ;
 				this.setPercmauvrep(calculPercentageMauvReponses());
-				this.setPercbonrep(calculPercentageBonReponses());
 				this.nbmauvreponses = calculNbMauvReponses();
 				Thread.sleep(5*100); //every ten sec stats are updated
 			} catch (InterruptedException ex) { }
 		}
 	}
 	
-	private float calculNbBonneReponses(){
+	public float calculNbBonneReponses(){
 		int result = 0 ;
 		for (int i = 0 ; i < getNbtotalquest() ; i++ ) {
 			if ( q.serie.get(i).isValid() ) nbbonnereponses = ++result ;
@@ -54,9 +53,9 @@ public class Statistique extends Thread {
 		return (getPercmauvrep()) ;
 	}
 
-	private float calculPercentageBonReponses(){ 
+	public int calculPercentageBonReponses(float nbbonnereponses){ 
 		if ( getNbtotalquest() != 0 ) setPercbonrep((nbbonnereponses/getNbtotalquest())*100) ;
-		return (getPercbonrep()) ;
+		return (int)(getPercbonrep()) ;
 	}
 	
 	/**
