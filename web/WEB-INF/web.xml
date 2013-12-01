@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
     <servlet>
-        <servlet-name>beginTest</servlet-name>
-        <servlet-class>com.hskme.web.beginTest</servlet-class>
+        <servlet-name>Controleur</servlet-name>
+        <servlet-class>com.hskme.web.TraiteQuestion</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>nextQuestion</servlet-name>
-        <servlet-class>com.hskme.web.nextQuestion</servlet-class>
+        <servlet-name>CommenceTest</servlet-name>
+        <servlet-class>com.hskme.web.CommenceTest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FiltreRequete</servlet-name>
+        <servlet-class>com.hskme.web.FiltreRequete</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>beginTest</servlet-name>
-        <url-pattern>/beginTest.do</url-pattern>
+        <servlet-name>Controleur</servlet-name>
+        <url-pattern>/TraiteQuestion</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>nextQuestion</servlet-name>
-        <url-pattern>/nextQuestion.do</url-pattern>
+        <servlet-name>CommenceTest</servlet-name>
+        <url-pattern>/CommenceTest.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FiltreRequete</servlet-name>
+        <url-pattern>/FiltreRequete</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>60</session-timeout>
     </session-config>
+    <listener>
+        <listener-class>com.hskme.model.HSKmeListener</listener-class>
+    </listener>
+    <filter>
+        <filter-name>FiltreRequete</filter-name>
+        <filter-class>com.hskme.web.FiltreRequete</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltreRequete</filter-name>
+        <servlet-name>/*</servlet-name>
+    </filter-mapping>
 </web-app>

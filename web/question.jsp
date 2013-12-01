@@ -8,84 +8,59 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <jsp:include page="header.jsp" >
-        <jsp:param name="title" value="HSKme" />
-    </jsp:include>
+    <jsp:include page="header.jsp" />
     <body>
-        <h1>Question</h1>
-        <%--DEBUG : before Count : ${count}, Nb : ${nb-1} --%>
-        <%-- Ordre declarations à respecter imperativement --%>
-        <c:set var="post" value="question.jsp" />
-        <jsp:useBean id="randomb" class="com.hskme.web.RandomBean" scope="application" />
-        <c:choose>
-            <c:when test="${param.submit eq 'solution'}" >
-                <c:set var="solution" value="${questionnaire[count].solution}" />
-            </c:when>
-            <c:when test="${param.submit ne null}" >
-                <c:set var="count" scope="application" value="${count + 1}" />
-            </c:when>
-        </c:choose>
-        <c:if test="${count eq nb-1}">
-            <c:set var="post" value="results.jsp" />
-        </c:if>
-        <form method="POST" action="${post}">
-        <table>
-            <tr>
-                <th>
-                    Voici le ${from} : 
-                </th>
-                <th>
-                    <font size="5pt">${questionnaire[count].question}</font>
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    Donnez son ${to} : 
-                </th>
-                <table style="width: 100%; border-collapse:collapse;">
-                    <c:set var="random" value="${randomb.nextInt}" />
-                        <c:forEach var="dicoCount" begin="1" end="5">
-                            <c:choose>
-                                <c:when test="${to eq 'caractere'}" >
-                                    <c:set var="aleasolution" value="${dictionnaire.vocabAlea.caractere}" />
-                                </c:when>
-                                <c:when test="${to eq 'francais'}" >
-                                    <c:set var="aleasolution" value="${dictionnaire.vocabAlea.traduction}" />
-                                </c:when>
-                                <c:when test="${to eq 'pinyin'}" >
-                                    <c:set var="aleasolution" value="${dictionnaire.vocabAlea.pinyin}" />
-                                </c:when>
-                            </c:choose>
-                            <c:if test="${dicoCount == random}" >
-                                <c:set var="aleasolution" value="${questionnaire[count].solution}" />
-                            </c:if>
-                        <tr>
-                            <td><input type="submit" value="${aleasolution}" name="submit"></td>
-                        </tr>
-                        </c:forEach>
-                </table>
-                    <c:if test="${count != 0}" >
-                        <c:set var="count1" value="${count}" />
-                        <c:set target="${questionnaire[count1-1]}" property="reponse" value="${param.submit}"/>
-                    </c:if>
-            </tr>
-            <tr>
-                <th>
-                    DEBUG : after Count : ${count}, Nb : ${nb-1}
-                </th>
-                <th>
-                    ${solution}
-                </th>
-            </tr>
-            <tr>
-                <th>
-                    <input type="submit" name="submit" value="solution">
-                </th>
-                <th>
-                    <a href="index.jsp">Nouveau questionnaire</a>
-                </th>
-            </tr>
-        </table>
-        </form>
+        <div id="title">
+            <h1>Question</h1>
+        </div>
+        <div id="content" >
+            <form method="GET" action="TraiteQuestion">
+            <table>
+                <tr>
+                    <th>Voici le ${from} : </th>
+                    <th><font size="5pt">${questionList[numero].question}</font></th>
+                </tr>
+                <tr>
+                    <th>Choisir son ${to} : </th>
+                    <th>
+                        <table>
+                                <c:set var="random" value="${randomb.nextInt}" scope="page"/>
+                                <c:forEach var="dicoCount" begin="1" end="5">
+                                    <c:choose>
+                                        <c:when test="${to eq 'caractere'}" >
+                                            <c:set var="aleasolution" value="${dictionnaire.vocabAlea.caractere}" />
+                                        </c:when>
+                                        <c:when test="${to eq 'francais'}" >
+                                            <c:set var="aleasolution" value="${dictionnaire.vocabAlea.traduction}" />
+                                        </c:when>
+                                        <c:when test="${to eq 'pinyin'}" >
+                                            <c:set var="aleasolution" value="${dictionnaire.vocabAlea.pinyin}" />
+                                        </c:when>
+                                    </c:choose>
+                                    <c:if test="${dicoCount == random}" >
+                                        <c:set var="aleasolution" value="${questionList[numero].solution}" />
+                                    </c:if>
+                                    <tr>
+                                        <td><input type="submit" value="${aleasolution}" name="reponse"></td>
+                                    </tr>
+                                </c:forEach>
+                        </table>
+                    </th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th>
+                        <a href="index.jsp">Nouveau questionnaire</a></th>
+                    <th>
+                        <a href="solution.jsp">Solution</a></th>
+                    </th>
+                </tr>
+            </table>
+            </form>
+        </div>
+        <div id="footer" ><jsp:include page="footer.jsp" /></div>
     </body>
 </html>

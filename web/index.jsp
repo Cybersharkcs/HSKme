@@ -34,15 +34,15 @@
                         <th>
                             Montrez en 
                             <select name="from" id="from" size="1" onChange="refreshElements(this.options[this.selectedIndex].value);">
-                                <option value="caractere"> chinois simplifié </option>
                                 <option value="francais"> français </option>
+                                <option value="caractere"> chinois simplifié </option>
                                 <option value="pinyin"> pinyin </option>
                             </select>
                             et devinez la réponse correcte en 
                             <select name="to" id="to" size="1">
+                                <option value="pinyin"> pinyin </option>
                                 <option value="caractere"> chinois simplifié </option>
                                 <option value="francais"> français </option>
-                                <option value="pinyin"> pinyin </option>
                             </select>
                              <center>
                                  <input type="submit" value="Commencez">
